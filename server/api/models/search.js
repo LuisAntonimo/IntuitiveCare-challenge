@@ -1,10 +1,10 @@
 import csvdb from 'csv-database';
-import headers from './headers.js'
+import headers, { path } from './headers.js'
 
 
 
 export default async function getRequest(params) {
-  const database = await csvdb('./api/data/teste.csv', headers, ';');
+  const database = await csvdb(path, headers, ';');
   const result = await database.get(params);
 
   return result;
