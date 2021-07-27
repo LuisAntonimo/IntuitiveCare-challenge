@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon api/app.js",
+    "csv": "nodemon api/controllers/getController.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,9 @@
     "nodemon": "^2.0.12"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "csv-database": "^0.9.2",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1"
   }
 }
