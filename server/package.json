@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon api/app.js",
-    "csv": "nodemon api/controllers/getController.js"
+    "start": "node api/app.js"
   },
   "keywords": [],
   "author": "",
