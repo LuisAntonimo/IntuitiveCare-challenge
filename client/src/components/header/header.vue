@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="white">
+  <v-app-bar color="white" >
     <div class="d-flex justify-center ma-auto">
       <v-img :src="require('@/assets/logo.png')" width="200">
 
