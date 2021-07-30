@@ -1,10 +1,19 @@
 import { Router } from 'express';
 import getParams from './controllers/searchController.js';
+import getRequest from './models/search.js';
 import postRequest from './models/create.js';
 import putRequest from './models/update.js';
 import deleteRequest from './models/delete.js';
 
 const routes = Router();
+
+routes.get('/', async(req, res) => {
+  const query = req.query;
+
+  const response = await getRequest(query);
+
+  res.send(response);
+})
 
 routes.get('/search', async (req, res) => {
   const query = req.query;
