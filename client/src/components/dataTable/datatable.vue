@@ -5,6 +5,7 @@
     :headers="headers"
     :items="ans"
     :search="search"
+    :items-per-page="5"
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -38,13 +39,17 @@
             <v-card-text>
               <v-container>
                 <v-row>
+                  <v-col  v-for="(value, name) in editedItem" :key="name" cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem[name]" :label="name"> 
+                    </v-text-field>
+                  </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close()">
+              <v-btn color="red darken-1" text @click="close()">
                 Cancelar
               </v-btn>
               <v-btn color="blue darken-1" text @click="save()">
@@ -72,11 +77,11 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Tem certeza que deseja deletar o registro?</v-card-title>
+            <v-card-title class="text-h5">Deseja realmente deletar o registro?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-btn color="blue darken-1" text @click="closeDelete"><strong>Cancelar</strong></v-btn>
+              <v-btn color="red darken-1" text @click="deleteItemConfirm">Confirmar</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
@@ -128,7 +133,7 @@ export default {
       dialogDelete: false,
       search: '',
       headers: [
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Opções', value: 'actions', sortable: false },
         {
           text: 'Registro ANS',
           align: 'start',
@@ -210,6 +215,7 @@ export default {
         'Cargo Representante': '',
         'Data Registro ANS': '',
       },
+      teste: '',
     };
   },
   computed: {
@@ -247,6 +253,18 @@ export default {
       fetch(`${process.env.VUE_APP_ADRESS}create`, init).then(
         this.ans.push(data)
       );
+    },
+    updateData(newData, data){
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+
+      const init = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: JSON.stringify(newData),
+      };
+
+      fetch(`${process.env.VUE_APP_ADRESS}ans/${data["Registro ANS"]}`, init)
     },
     deleteData(data) {
       const myHeaders = new Headers();
@@ -290,11 +308,13 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.ans[this.editedIndex], this.editedItem);
-        // this.postData(this.editedItem)
+        const originalData = this.ans[this.editedIndex];
+
+        this.updateData(this.editedItem, originalData)
+        Object.assign(originalData, this.editedItem);
       } else {
-        this.ans.push(this.editedItem);
-        console.log(this.ans)
+        this.postData(this.editedItem)
+        
       }
       this.close();
     },

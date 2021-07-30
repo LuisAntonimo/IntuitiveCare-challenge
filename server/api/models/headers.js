@@ -20,7 +20,7 @@ const headers = [
   'Data Registro ANS',
 ];
 
-const path = './api/data/teste.csv';
+const path = './api/data/data.csv';
 
 export default headers;
 export { path };
