@@ -116,9 +116,9 @@
     <template v-slot:no-data>
       <v-btn
         color="primary"
-        @click="getData"
+        @click="open"
       >
-        Reset
+        Ir até o repositório
       </v-btn>
     </template>
   </v-data-table>
@@ -318,6 +318,9 @@ export default {
       }
       this.close();
     },
+    open() {
+      window.open('https://github.com/LuisAntonimo/intuitiveCare_codeChallenge')
+    }
   },
 };
 </script>
